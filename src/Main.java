@@ -6,27 +6,77 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLOutput;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.HTTP;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+
+    private static final String API_KEY = "b52bdef2c17941168aa104617240501";
+    public static void main(String[] args) throws JSONException {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
+        JSONObject countryWeather = getCountryJson("sweden");
+    }
+
+    public static JSONObject getCountryJson(String country) throws JSONException {
+
+        JSONObject data = new JSONObject();
         try {
             // Code
             // www.weatherapi.com
-            String k = "https://api.weatherapi.com/v1/current.json?key=b52bdef2c17941168aa104617240501&q=stockholm";
-            String API_KEY = "5d193ec9d6f54ae5afb104151240501";
-            String baseURL = "http://api.weatherapi.com/v1/current.json";
+            String k = "https://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=" + country;
 
-            JSONObject obj = HTTP.toJSONObject("POST \"https://api.weatherapi.com/v1/current.json?key=b52bdef2c17941168aa104617240501&q=stockholm\" HTTP/1.1");
+            URL url = new URL(k);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
 
-            //String test = obj.getString("location");
-            System.out.println(obj);
-            /*"{\n" +
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK){
+                java.io.BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null){
+                    response.append(inputLine);
+                }
+                in.close();
+
+                data = new JSONObject(response.toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try{
+            return getWeatherInfo(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new JSONObject();
+    }
+
+    public static JSONObject getWeatherInfo(JSONObject data) throws JSONException {
+        JSONObject weatherInfo = new JSONObject();
+        JSONObject location = data.getJSONObject("location");
+        JSONObject current = data.getJSONObject("current");
+        weatherInfo.put("name", location.getString("name"));
+        weatherInfo.put("region", location.getString("region"));
+        weatherInfo.put("country", location.getString("country"));
+        weatherInfo.put("localtime", location.getString("localtime"));
+        weatherInfo.put("temp_c", current.getDouble("temp_c"));
+        weatherInfo.put("temp_f", current.getDouble("temp_f"));
+        weatherInfo.put("description", current.getJSONObject("condition").getString("text"));
+        System.out.println(weatherInfo);
+
+        return weatherInfo;
+    }
+}
+
+/*"{\n" +
                     "    \"location\": {\n" +
                     "        \"name\": \"Stockholm\",\n" +
                     "        \"region\": \"Stockholms Lan\",\n" +
@@ -66,6 +116,7 @@ public class Main {
                     "        \"gust_mph\": 11.9,\n" +
                     "        \"gust_kph\": 19.1\n" +
                     "    }\n" +
+<<<<<<< Updated upstream
                     "}"*/
 
             URL url = new URL(k);
@@ -106,3 +157,6 @@ public class Main {
         }
     }
 } // test
+=======
+                    "}"*/
+>>>>>>> Stashed changes
