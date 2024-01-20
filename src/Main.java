@@ -11,17 +11,17 @@ import org.json.JSONArray;
 public class Main {
     public static void main(String[] args) {
         try {
-
+            // Api key och länk
             String api_key = "b52bdef2c17941168aa104617240501";
             String base_url = "http://api.weatherapi.com/v1/forecast.json";
 
             // Skapar scanner object for user input
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("What city would you want the forecast for? ");
+            System.out.println("For which city do you want the forecast for?");
             String city = scanner.nextLine();
 
-            System.out.println("How many days ahead do you want the forecast? 1-14 ");
+            System.out.println("How many days ahead do you want the forecast? (1-14)");
             int days = scanner.nextInt();
 
             // Sätter ihop url och skapar ny URL objekt
@@ -54,11 +54,12 @@ public class Main {
                 // Hämtar data för att visa
                 JSONObject location_data = obj.getJSONObject("location");
                 String city_name = location_data.getString("name");
+                String country_name = location_data.getString("country");
 
                 JSONObject current_data = obj.getJSONObject("current");
                 int temp_c = current_data.getInt("temp_c");
 
-                System.out.println("Today, the average temperature in " + city_name + " is " + temp_c + "°C");
+                System.out.println("\nToday, the average temperature in " + city_name + ", " + country_name + " is " + temp_c + "°C\n");
 
                 JSONObject forecast_data = obj.getJSONObject("forecast");
                 JSONArray forecastDayArray = forecast_data.getJSONArray("forecastday");
@@ -72,7 +73,6 @@ public class Main {
                     double avgTempC = forecastDayObject.getJSONObject("day").getDouble("avgtemp_c");
 
                     System.out.println("The average temperature on " + date + " will likely be " + avgTempC + "°C");
-
                 }
             }
         } catch (Exception e) {
