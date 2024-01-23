@@ -71,8 +71,13 @@ public class Main {
                     String date = forecastDayObject.getString("date");
 
                     double avgTempC = forecastDayObject.getJSONObject("day").getDouble("avgtemp_c");
+                    int rain = forecastDayObject.getJSONObject("day").getInt("daily_will_it_rain");
 
-                    System.out.println("The average temperature on " + date + " will likely be " + avgTempC + "°C");
+                    if (rain == 1){
+                        System.out.println("The average temperature on " + date + " will likely be " + avgTempC + "°C and it will most likely rain that day.");
+                    } else {
+                        System.out.println("The average temperature on " + date + " will likely be " + avgTempC + "°C and it will most likely NOT rain that day.");
+                    }
                 }
             }
         } catch (Exception e) {
