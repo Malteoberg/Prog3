@@ -32,28 +32,30 @@ class WeatherApp {
     }
 
     public void start() {
-        // Rullgardin för användaren att välja option
-        String[] options = {"Current weather", "Weather Forecast", "Weather history specific date"};
-        String selectedOption = (String) JOptionPane.showInputDialog(
-                null, "Select your choice: ", "Weather Information",
-                JOptionPane.QUESTION_MESSAGE, null, options, options[0]
-        );
-        if (selectedOption == null) return;
+        while (true) {
+            // Rullgardin för användaren att välja option
+            String[] options = {"Current weather", "Weather Forecast", "Weather history specific date"};
+            String selectedOption = (String) JOptionPane.showInputDialog(
+                    null, "Select your choice: ", "Weather Information",
+                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]
+            );
+            if (selectedOption == null) return;
 
-        // Switch för att hantera vad som körs beroende på användarens val
-        switch (selectedOption) {
-            case "Weather Forecast":
-                forecast.forecast();
-                break;
-            case "Weather history specific date":
-                history.history();
-                break;
-            case "Current weather":
-                current.current();
-                break;
-            default:
-                // Handle invalid selection
-                break;
+            // Switch för att hantera vad som körs beroende på användarens val
+            switch (selectedOption) {
+                case "Weather Forecast":
+                    forecast.forecast();
+                    break;
+                case "Weather history specific date":
+                    history.history();
+                    break;
+                case "Current weather":
+                    current.current();
+                    break;
+                default:
+                    // Handle invalid selection
+                    break;
+            }
         }
     }
 }
