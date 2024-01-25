@@ -1,28 +1,45 @@
 import javax.swing.JOptionPane;
 
-
 public class Main {
     public static void main(String[] args) {
-        // Skapa instanser av klasserna
-        Current current_obj = new Current();
-        History history_obj = new History();
-        Forecast forecast_obj = new Forecast();
+        WeatherApp weatherApp = new WeatherApp();
+        weatherApp.start();
+    }
+}
 
-        // Fråga användaren om vad denne vill göra
-        String[] options = {"Todays weather", "Weather Forecast", "Weather history"};
-        String selectedCountry = (String) JOptionPane.showInputDialog(null, "Select a option:", "Weather Information",
-                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+class WeatherApp {
+    // Instansierar klasserna
+    private Current current;
+    private History history;
+    private Forecast forecast;
 
+    // Konstruktörer för insiitiera instanserna av klasserna
+    public WeatherApp() {
+        this.current = new Current();
+        this.history = new History();
+        this.forecast = new Forecast();
+    }
 
-        if (selectedCountry == "Weather Forecast") {
-            // Kalla på metoden forecast från Forecast klassen
-            forecast_obj.forecast();
-        }
-        else if (selectedCountry == "Weather history specific date") {
-            history_obj.history();
-        }
-        else {
-            current_obj.current();
+    public void start() {
+        String[] options = {"Current weather", "Weather Forecast", "Weather history specific date"};
+        String selectedOption = (String) JOptionPane.showInputDialog(
+                null, "Select your choice: ", "Weather Information",
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]
+        );
+
+        switch (selectedOption) {
+            case "Weather Forecast":
+                forecast.forecast();
+                break;
+            case "Weather history specific date":
+                history.history();
+                break;
+            case "Current weather":
+                current.current();
+                break;
+            default:
+                // Handle invalid selection
+                break;
         }
     }
 }
