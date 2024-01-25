@@ -8,7 +8,8 @@ public class Main {
         History history_obj = new History();
         Forecast forecast_obj = new Forecast();
 
-        String[] options = {"Current weather", "Weather Forecast", "Weather history specific date"};
+        // Fråga användaren om vad denne vill göra
+        String[] options = {"Todays weather", "Weather Forecast", "Weather history"};
         String selectedCountry = (String) JOptionPane.showInputDialog(null, "Select a option:", "Weather Information",
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
@@ -20,7 +21,7 @@ public class Main {
         else if (selectedCountry == "Weather history specific date") {
             history_obj.history();
         }
-        else if (selectedCountry == "Current weather"){
+        else {
             current_obj.current();
         }
     }
