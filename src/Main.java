@@ -21,12 +21,14 @@ class WeatherApp {
     }
 
     public void start() {
+        // Rullgardin för användaren att välja option
         String[] options = {"Current weather", "Weather Forecast", "Weather history specific date"};
         String selectedOption = (String) JOptionPane.showInputDialog(
                 null, "Select your choice: ", "Weather Information",
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]
         );
 
+        // Switch för att hantera vad som körs beroende på användarens val
         switch (selectedOption) {
             case "Weather Forecast":
                 forecast.forecast();
