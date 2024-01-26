@@ -28,9 +28,10 @@ public class Forecast {
         String days = JOptionPane.showInputDialog(null, "How many days ahead do you want the forecast? (1-3 including today) ", "Weather forecast", JOptionPane.QUESTION_MESSAGE);
 
         JSONObject forecast = getForecast(city, days);
-        String formattedForcast = formatForecast(forecast);
+        String formattedForecast = formatForecast(forecast);
         // Visa det sammanfogade meddelandet i en enda JOptionPane
-        JOptionPane.showMessageDialog(null, formattedForcast, " Weather information", JOptionPane.INFORMATION_MESSAGE);
+        if (formattedForecast != null)
+            JOptionPane.showMessageDialog(null, formattedForecast, " Weather information", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -94,7 +95,7 @@ public class Forecast {
     public static String formatForecast(JSONObject forcast) {
         // Hämtar data för att visa
         StringBuilder messageBuilder = null;
-
+        if (forcast == null ) return null;
         try {
             JSONObject location_data = forcast.getJSONObject("location");
             String city_name = location_data.getString("name");

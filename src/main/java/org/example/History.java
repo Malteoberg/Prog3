@@ -34,8 +34,8 @@ public class History {
 
         JSONObject history = getHistory(city, historicalDate);
         String formattedHistory = formatHistory(history, historicalDate);
-
-        JOptionPane.showMessageDialog(null, formattedHistory, " Weather information", JOptionPane.INFORMATION_MESSAGE);
+        if (formattedHistory != null)
+            JOptionPane.showMessageDialog(null, formattedHistory, " Weather information", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -93,6 +93,7 @@ public class History {
      */
     public static String formatHistory(JSONObject history, String historicalDate){
         String message = null;
+        if (history == null) return message;
         try {
             // Kontrollera om data för det angivna datumet finns tillgänglig
             // Extrahera data från JSON-objektet

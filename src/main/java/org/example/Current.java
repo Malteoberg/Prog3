@@ -29,7 +29,8 @@ public class Current {
 
         JSONObject current = getCurrent(city);
         String formattedCurrent = formatCurrent(current);
-        JOptionPane.showMessageDialog(null, formattedCurrent, " Weather information", JOptionPane.INFORMATION_MESSAGE);
+        if (formattedCurrent != null)
+            JOptionPane.showMessageDialog(null, formattedCurrent, " Weather information", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -84,6 +85,7 @@ public class Current {
      */
     public static String formatCurrent(JSONObject jsonResponse){
         String message = null;
+        if (jsonResponse == null) return message;
         try {
             // Extrahera data från JSON-objektet
             JSONObject location = jsonResponse.getJSONObject("location");

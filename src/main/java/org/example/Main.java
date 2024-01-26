@@ -45,13 +45,10 @@ class WeatherApp {
             switch (selectedOption) {
                 case "Weather Forecast":
                     forecast.forecast();
-                    break;
                 case "Weather history specific date":
                     history.history();
-                    break;
                 case "Current weather":
                     current.current();
-                    break;
                 default:
                     // Handle invalid selection
                     break;
